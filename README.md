@@ -19,9 +19,7 @@ Detect fatigue before it becomes dangerous using **Computer Vision**, **MediaPip
 
 ### 🎥 Demo
 
-> 📹 **Watch the complete working demo below**
-
-a
+▶️ **[Watch the Demo Video](assets/output.mp4)**
 
 ---
 
