@@ -1,69 +1,240 @@
+<div align="center">
+
 # 😴 Sleep Alarm Detector
 
-Detects when you fall asleep at your desk using your webcam. Shows a **green** face box when you're awake and a **red** pulsing alert when your eyes are closed too long — and plays an alarm sound to wake you up.
+### 🚗 AI-Powered Real-Time Drowsiness Detection System
+
+Detect fatigue before it becomes dangerous using **Computer Vision**, **MediaPipe Face Mesh**, and **OpenCV**.
+
+<p>
+
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Face%20Mesh-FF6F00?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Working-success?style=for-the-badge)
+
+</p>
 
 ---
 
-## Requirements
+### 🎥 Demo
 
-- Python 3.8+
-- Webcam
+> 📹 **Watch the complete working demo below**
 
-Install dependencies:
+a
+
+---
+
+</div>
+
+# 🌟 Overview
+
+Sleep Alarm Detector is an AI-based computer vision application that continuously monitors the user's eyes through a webcam. By analyzing facial landmarks in real time, it calculates the **Eye Aspect Ratio (EAR)** to determine whether the eyes are open or closed.
+
+If the eyes remain closed for more than **2.5 seconds**, the system instantly triggers an alarm, helping prevent microsleep and drowsiness.
+
+This project demonstrates the practical application of **Artificial Intelligence**, **Computer Vision**, and **Human Safety Systems**.
+
+---
+
+# ✨ Features
+
+✅ Real-time Face Detection
+
+✅ Eye Aspect Ratio (EAR) Calculation
+
+✅ Drowsiness Detection
+
+✅ Instant Audio Alarm
+
+✅ Live Status Overlay
+
+✅ Face Bounding Box
+
+✅ Lightweight & Fast
+
+✅ Cross Platform
+
+---
+
+# 🛠️ Tech Stack
+
+| Technology | Usage |
+|------------|-------|
+| 🐍 Python | Core Programming |
+| 👁️ OpenCV | Webcam & Image Processing |
+| 🤖 MediaPipe Face Mesh | Facial Landmark Detection |
+| 🔢 NumPy | Mathematical Calculations |
+| 🔊 Pygame | Alarm System |
+
+---
+
+# ⚙️ Working Flow
+
+```text
+ Webcam
+    │
+    ▼
+ Capture Video Frames
+    │
+    ▼
+ Detect Face using MediaPipe
+    │
+    ▼
+ Extract Eye Landmarks
+    │
+    ▼
+ Calculate Eye Aspect Ratio (EAR)
+    │
+    ▼
+ Eyes Closed?
+   │        │
+   │ No     │ Yes
+   ▼        ▼
+ Continue   Start Timer
+                 │
+                 ▼
+      Closed > 2.5 Seconds?
+             │
+             ▼
+        🚨 Trigger Alarm
+```
+
+---
+
+# 📂 Project Structure
+
+```
+Sleep-Alarm-Detector
+│
+├── sleep_alarm.py
+├── requirements.txt
+├── dragon-studio-censor-beep-3-372460.mp3
+└── README.md
+```
+
+---
+
+# 🚀 Installation
+
+### Clone Repository
 
 ```bash
-pip install mediapipe opencv-python numpy pygame
+git clone https://github.com/yourusername/Sleep-Alarm-Detector.git
 ```
-
----
-
-## Setup
-
-1. **Clone / download** this folder.
-2. **Add your alarm sound** — place any `.mp3` or `.wav` file in the project folder and update the path in `sleep_alarm.py`:
-
-```python
-ALARM_SOUND_FILE = r"/full/path/to/your/alarm.mp3"
-```
-
-3. **(Optional) Tune the settings** at the top of `sleep_alarm.py`:
-
-| Variable | Default | Description |
-|---|---|---|
-| `EAR_THRESHOLD` | `0.22` | Eye openness threshold — lower = less sensitive |
-| `EYE_CLOSED_SECONDS` | `2.5` | Seconds eyes must stay closed to trigger alarm |
-
----
-
-## Run
 
 ```bash
-python3 sleep_alarm.py
+cd Sleep-Alarm-Detector
 ```
 
-Press **Q** to quit.
+### Create Virtual Environment
+
+```bash
+python3 -m venv venv
+```
+
+### Activate
+
+macOS / Linux
+
+```bash
+source venv/bin/activate
+```
+
+Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run
+
+```bash
+python sleep_alarm.py
+```
 
 ---
 
-## How It Works
+# 🧠 How It Works
 
-| Status | Signal | What's shown |
-|---|---|---|
-| 👁️ Eyes open | 🟢 Green | Green face box + "AWAKE" pill |
-| 😴 Eyes closing | 🟠 Orange bar | Progress bar filling up |
-| 🚨 Eyes closed ≥ 2.5s | 🔴 Red | Pulsing red overlay + alarm sound |
+The system uses **MediaPipe Face Mesh**, which detects **468 facial landmarks** in every frame captured by the webcam.
 
-- Uses **MediaPipe Face Mesh** to track 468 facial landmarks in real time.
-- Computes the **Eye Aspect Ratio (EAR)** for both eyes — when EAR drops below the threshold, the countdown starts.
-- Alarm loops until you open your eyes.
+Using six landmark points around each eye, the application computes the **Eye Aspect Ratio (EAR)**.
+
+- 👁️ High EAR → Eyes Open
+- 😴 Low EAR → Eyes Closed
+
+If the EAR remains below the predefined threshold for more than **2.5 seconds**, the application concludes that the user may be drowsy and immediately plays an alarm.
 
 ---
 
-## Troubleshooting
+# 📊 Detection Parameters
 
-| Problem | Fix |
-|---|---|
-| Black screen / no camera | Change `cv2.VideoCapture(1)` to `cv2.VideoCapture(0)` in `sleep_alarm.py` |
-| Alarm not playing | Check the file path in `ALARM_SOUND_FILE` is correct |
-| Too many false triggers | Increase `EAR_THRESHOLD` to `0.25` |
-| Alarm fires too quickly | Increase `EYE_CLOSED_SECONDS` to `3.0` or higher |
+| Parameter | Value |
+|-----------|------:|
+| EAR Threshold | **0.22** |
+| Eye Closure Duration | **2.5 Seconds** |
+| Maximum Faces | **1** |
+
+---
+
+# 💡 Applications
+
+🚗 Driver Drowsiness Detection
+
+💻 Long Working Hours Monitoring
+
+📚 Student Study Assistant
+
+🏭 Industrial Safety
+
+👨‍💻 Programmer Fatigue Monitoring
+
+---
+
+# 🔮 Future Scope
+
+- 😴 Yawning Detection
+- 📱 Mobile Notifications
+- ☁️ Cloud Dashboard
+- 📈 Sleep Analytics
+- 🧠 Deep Learning Based Drowsiness Detection
+- 🌙 Night Vision Support
+- 👥 Multi-Person Detection
+
+---
+
+# 📦 Dependencies
+
+```
+mediapipe
+opencv-python
+numpy
+pygame
+```
+
+---
+
+# 👩‍💻 Author
+
+**Shravani Rane**
+
+Computer Science Engineering (AI & ML)
+
+🌐 GitHub: https://github.com/shravaniranee
+
+---
+
+<div align="center">
+
+### ⭐ If you found this project interesting, consider giving it a Star!
+
+**Made with ❤️ using Python, OpenCV & MediaPipe**
+
+</div>
