@@ -41,13 +41,23 @@ This project demonstrates the practical application of **Artificial Intelligence
 
 ✅ Eye Aspect Ratio (EAR) Calculation
 
-✅ Drowsiness Detection
+✅ Yawn Detection (Mouth Aspect Ratio)
 
-✅ Instant Audio Alarm
+✅ Head-Droop / Head-Pose Detection
 
-✅ Live Status Overlay
+✅ Blink-Rate Tracking
 
-✅ Face Bounding Box
+✅ Composite Drowsiness Score (0–100)
+
+✅ Personalised Startup Calibration
+
+✅ Voice Alerts ("Wake up!") via Text-to-Speech
+
+✅ Escalating Alarm Volume
+
+✅ Snooze by Key or Head-Shake Gesture
+
+✅ Live Status Overlay & Face Bounding Box
 
 ✅ Lightweight & Fast
 
@@ -60,10 +70,11 @@ This project demonstrates the practical application of **Artificial Intelligence
 | Technology | Usage |
 |------------|-------|
 | 🐍 Python | Core Programming |
-| 👁️ OpenCV | Webcam & Image Processing |
+| 👁️ OpenCV | Webcam, Image Processing & Head-Pose (solvePnP) |
 | 🤖 MediaPipe Face Mesh | Facial Landmark Detection |
 | 🔢 NumPy | Mathematical Calculations |
 | 🔊 Pygame | Alarm System |
+| 🗣️ pyttsx3 | Offline Voice Alerts |
 
 ---
 
@@ -168,7 +179,14 @@ Using six landmark points around each eye, the application computes the **Eye As
 - 👁️ High EAR → Eyes Open
 - 😴 Low EAR → Eyes Closed
 
-If the EAR remains below the predefined threshold for more than **2.5 seconds**, the application concludes that the user may be drowsy and immediately plays an alarm.
+Beyond the eyes, the app also tracks the **Mouth Aspect Ratio (MAR)** for yawns,
+estimates **head pose** with `cv2.solvePnP` to catch a drooping/nodding head, and
+monitors **blink rate**. These signals are blended into a single **drowsiness
+score (0–100)**.
+
+The alarm triggers if the eyes stay closed past the threshold, the head droops
+for too long, **or** the overall score crosses **85** — then it escalates in
+volume and speaks aloud until you respond or snooze.
 
 ---
 
@@ -176,9 +194,31 @@ If the EAR remains below the predefined threshold for more than **2.5 seconds**,
 
 | Parameter | Value |
 |-----------|------:|
-| EAR Threshold | **0.22** |
+| EAR Threshold | **0.22** (auto-calibrated at startup) |
 | Eye Closure Duration | **2.5 Seconds** |
+| MAR (Yawn) Threshold | **0.60** |
+| Yawn Minimum Duration | **0.6 Seconds** |
+| Head-Droop Angle | **18°** |
+| Head-Droop Duration | **2.0 Seconds** |
+| Score Alarm Threshold | **85 / 100** |
+| Snooze Duration | **20 Seconds** |
 | Maximum Faces | **1** |
+
+The alarm fires on **any** of: eyes closed too long, head drooped too long, or a
+composite drowsiness score at/above the threshold.
+
+---
+
+# 🎮 Controls
+
+| Key / Gesture | Action |
+|---------------|--------|
+| **Q** | Quit |
+| **S** | Snooze the alarm |
+| 🙆 **Shake your head** | Snooze the alarm hands-free |
+
+At launch the app runs a short calibration — **keep your eyes open** for a few
+seconds so it can personalise the closed-eye threshold (press **S** to skip).
 
 ---
 
@@ -198,10 +238,9 @@ If the EAR remains below the predefined threshold for more than **2.5 seconds**,
 
 # 🔮 Future Scope
 
-- 😴 Yawning Detection
 - 📱 Mobile Notifications
 - ☁️ Cloud Dashboard
-- 📈 Sleep Analytics
+- 📈 Sleep Analytics & Session Reports
 - 🧠 Deep Learning Based Drowsiness Detection
 - 🌙 Night Vision Support
 - 👥 Multi-Person Detection
@@ -215,7 +254,10 @@ mediapipe
 opencv-python
 numpy
 pygame
+pyttsx3
 ```
+
+> `pyttsx3` is optional — without it the app still runs, just without voice alerts.
 
 ---
 
